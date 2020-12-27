@@ -1,2 +1,7 @@
 const statement = "create table author (id number, name string, age number, city string, state string, country string)";
-console.log(statement);
+const regexp = /create table ([a-z]+) \((.+)\)/;
+const parsedStatement = statement.match(regexp);
+const tableName = parsedStatement[1];
+let columns = parsedStatement[2].split(", ");
+console.log(tableName);
+console.log(columns);
