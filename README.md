@@ -1,1 +1,1 @@
-A simple database in javascript.
+A simple database simulator in javascript.
