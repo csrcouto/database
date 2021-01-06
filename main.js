@@ -33,12 +33,18 @@ const database = {
         }
         this.tables[tableName].data.push(row);
     },
+    select (statement) {
+
+    },
     execute(statement) {
         if (statement.startsWith("create table")) {
             return this.createTable(statement);
         }
         if (statement.startsWith("insert")) {
             return this.insert(statement);
+        }
+        if (statement.startsWith("select")) {
+            return this.select(statement);
         }
         const message = `Syntax error: "${statement}"`;
         throw new DatabaseError(statement, message);
