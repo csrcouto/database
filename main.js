@@ -34,7 +34,19 @@ const database = {
         this.tables[tableName].data.push(row);
     },
     select (statement) {
-
+        const regExp = /select (.+) from ([a-z]+)/;
+        const parsedStatement = statement.match(regExp);
+        let [, columns, tableName] = parsedStatement;
+        columns = columns.split(", ");
+        let rows = this.tables[tableName].data;
+        rows = rows.map(function(row) {
+            let selectedRow = {};
+            columns.forEach(function(column) {
+                selectedRow[column] = row[column];
+            });
+            return selectedRow;
+        });
+        return rows;
     },
     execute(statement) {
         if (statement.startsWith("create table")) {
@@ -55,7 +67,7 @@ try {
     database.execute("insert into author (id, name, age) values (1, Douglas Crockford, 62)");
     database.execute("insert into author (id, name, age) values (2, Linus Torvalds, 47)");
     database.execute("insert into author (id, name, age) values (3, Martin Fowler, 54)");
-    console.log(JSON.stringify(database, undefined, " "));
+    console.log(JSON.stringify(database.execute("select name, age from author"), undefined, " "));
 } catch (e) {
     console.log(e.message);
 }
