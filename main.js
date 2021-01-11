@@ -54,7 +54,7 @@ class Database {
         }
         this.tables[tableName].data.push(row);
     }
-    select (parsedStatement) {
+    select(parsedStatement) {
         let [, columns, tableName, whereClause] = parsedStatement;
         columns = columns.split(", ");
         let rows = this.tables[tableName].data;
